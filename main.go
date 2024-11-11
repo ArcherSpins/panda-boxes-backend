@@ -11,7 +11,7 @@ import (
 
 func main() {
 	config := configs.GetConfig()
-	db.ConnectDatabase(config)
+	db.ConnectDatabase()
 
 	r := gin.Default()
 	r.GET("/boxes", handlers.GetBoxes)
