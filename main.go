@@ -10,6 +10,7 @@ import (
 )
 
 func main() {
+	log.Printf("Starting...")
 	config := configs.GetConfig()
 	db.ConnectDatabase()
 
