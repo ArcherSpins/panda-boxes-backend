@@ -38,7 +38,7 @@ func ConnectDatabase() {
 		log.Fatal("DATABASE_URL не установлена")
 	}
 
-	log.Panicln(dsn)
+	log.Println(dsn)
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatalf("Не удалось подключиться к базе данных: %v", err)
