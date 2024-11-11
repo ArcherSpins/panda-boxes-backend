@@ -12,6 +12,7 @@ import (
 func main() {
 	log.Printf("Starting...")
 	config := configs.GetConfig()
+	log.Printf("Connecting...")
 	db.ConnectDatabase()
 
 	r := gin.Default()
