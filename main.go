@@ -17,5 +17,5 @@ func main() {
 	r.POST("/boxes", handlers.CreateBox)
 	r.PUT("/boxes/edit", handlers.EditBox)
 
-	r.Run(":8080")
+	r.Run(":" + config.AppPort)
 }

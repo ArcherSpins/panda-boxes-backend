@@ -11,6 +11,7 @@ type Config struct {
 	DBUser     string
 	DBPassword string
 	DBName     string
+	AppPort    string
 }
 
 func GetConfig() *Config {
@@ -20,6 +21,7 @@ func GetConfig() *Config {
 		DBUser:     os.Getenv("PGUSER"),
 		DBPassword: os.Getenv("PGPASSWORD"),
 		DBName:     os.Getenv("PGDATABASE"),
+		AppPort:    os.Getenv("PORT"),
 	}
 }
 
