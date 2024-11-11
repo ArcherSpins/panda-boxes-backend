@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"panda-boxes/configs"
 	"panda-boxes/db"
 	"panda-boxes/internal/handlers"
@@ -17,5 +18,12 @@ func main() {
 	r.POST("/boxes", handlers.CreateBox)
 	r.PUT("/boxes/edit", handlers.EditBox)
 
-	r.Run(":" + config.AppPort)
+	port := config.AppPort
+
+	if port == "" {
+		port = "8080"
+	}
+
+	log.Printf("Starting server on port %s", port)
+	r.Run(":" + port)
 }
