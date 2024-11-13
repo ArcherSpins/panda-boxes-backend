@@ -33,8 +33,15 @@ func GetConfig() *Config {
 }
 
 func (c *Config) GetDSN() string {
-	dns := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
-		c.DBHost, c.DBPort, c.DBUser, c.DBPassword, c.DBName)
+	if err := godotenv.Load(); err != nil {
+		log.Println("No .env file found")
+	}
+
+	dns := os.Getenv("DATABASE_URL")
+	if dns == "" {
+		dns = fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
+			c.DBHost, c.DBPort, c.DBUser, c.DBPassword, c.DBName)
+	}
 
 	log.Println(dns, "dns")
 	return dns
