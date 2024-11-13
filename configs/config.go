@@ -2,7 +2,10 @@ package configs
 
 import (
 	"fmt"
+	"log"
 	"os"
+
+	"github.com/joho/godotenv"
 )
 
 type Config struct {
@@ -15,6 +18,10 @@ type Config struct {
 }
 
 func GetConfig() *Config {
+	if err := godotenv.Load(); err != nil {
+		log.Println("No .env file found")
+	}
+
 	return &Config{
 		DBHost:     os.Getenv("PGHOST"),
 		DBPort:     os.Getenv("PGPORT"),
@@ -26,6 +33,9 @@ func GetConfig() *Config {
 }
 
 func (c *Config) GetDSN() string {
-	return fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=require",
+	dns := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
 		c.DBHost, c.DBPort, c.DBUser, c.DBPassword, c.DBName)
+
+	log.Println(dns, "dns")
+	return dns
 }
