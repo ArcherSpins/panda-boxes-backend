@@ -12,6 +12,7 @@ var DB *gorm.DB
 
 func ConnectDatabase(config *configs.Config) {
 	dsn := config.GetDSN()
+	log.Println("Соединение с: ", dsn)
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatalf("Не удалось подключиться к базе данных: %v", err)

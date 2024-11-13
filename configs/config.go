@@ -43,6 +43,5 @@ func (c *Config) GetDSN() string {
 			c.DBHost, c.DBPort, c.DBUser, c.DBPassword, c.DBName)
 	}
 
-	log.Println(dns, "dns")
 	return dns
 }
