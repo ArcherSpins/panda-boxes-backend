@@ -38,6 +38,7 @@ func (c *Config) GetDSN() string {
 	}
 
 	dns := os.Getenv("DATABASE_PUBLIC_URL")
+	log.Println(dns, "dns")
 	if dns == "" {
 		dns = fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
 			c.DBHost, c.DBPort, c.DBUser, c.DBPassword, c.DBName)
