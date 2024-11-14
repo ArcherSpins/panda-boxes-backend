@@ -37,7 +37,7 @@ func (c *Config) GetDSN() string {
 		log.Println("No .env file found")
 	}
 
-	dns := os.Getenv("DATABASE_URL")
+	dns := os.Getenv("DATABASE_PUBLIC_URL")
 	if dns == "" {
 		dns = fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
 			c.DBHost, c.DBPort, c.DBUser, c.DBPassword, c.DBName)
