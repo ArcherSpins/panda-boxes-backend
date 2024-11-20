@@ -16,6 +16,11 @@ func main() {
 	db.ConnectDatabase(config)
 
 	r := gin.Default()
+
+	r.POST("/auth", handlers.Auth)
+	r.POST("/register", handlers.Register)
+	r.POST("/forgot-password", handlers.ForgotPassword)
+
 	r.GET("/boxes", handlers.GetBoxes)
 	r.DELETE("/boxes/:id", handlers.DeleteBox)
 	r.POST("/boxes", handlers.CreateBox)
