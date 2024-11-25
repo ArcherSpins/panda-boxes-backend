@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS schema_migrations (
 );
 
 CREATE TABLE boxes (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     name VARCHAR(255) NOT NULL,
     price INT NOT NULL,
     created_at TIMESTAMP DEFAULT NOW(),

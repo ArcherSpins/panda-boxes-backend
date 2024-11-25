@@ -1,0 +1,155 @@
+definitions:
+  models.Box:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      price:
+        type: integer
+    type: object
+  models.NewBox:
+    properties:
+      name:
+        type: string
+      price:
+        type: integer
+    type: object
+  models.UserAuth:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  models.UserRegister:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /api/boxes:
+    get:
+      description: Returns a list of boxes
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get boxes
+      tags:
+      - boxes
+    post:
+      description: Create a box
+      parameters:
+      - description: Create box
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.NewBox'
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Post boxes
+      tags:
+      - boxes
+    put:
+      description: Edit the box
+      parameters:
+      - description: Edit box
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.Box'
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Put boxes
+      tags:
+      - boxes
+  /api/boxes/{id}:
+    delete:
+      description: Delete the box
+      parameters:
+      - description: Box ID
+        format: uuid
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Delete boxes
+      tags:
+      - boxes
+  /auth/login:
+    post:
+      description: Login
+      parameters:
+      - description: User auth
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserAuth'
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Auth user
+      tags:
+      - users
+  /auth/register:
+    post:
+      description: Create a user
+      parameters:
+      - description: User register
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserRegister'
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Post users
+      tags:
+      - users
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

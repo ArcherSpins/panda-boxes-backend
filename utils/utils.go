@@ -6,11 +6,11 @@ import (
 	"panda-boxes/models"
 	"time"
 
-	"github.com/golang-jwt/jwt/v4"
+	"github.com/golang-jwt/jwt/v5"
 	"golang.org/x/crypto/bcrypt"
 )
 
-var jwtSecret = []byte("your_secret_key")
+var JwtSecret = []byte("your_secret_key")
 
 func CheckPasswordHash(password, hashedPassword string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
@@ -53,5 +53,5 @@ func GenerateJWT(user models.User, exp int64) (string, error) {
 		"exp":     exp,
 	})
 
-	return token.SignedString(jwtSecret)
+	return token.SignedString(JwtSecret)
 }

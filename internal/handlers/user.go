@@ -44,8 +44,14 @@ func ForgotPassword(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Password reset link sent"})
 }
 
+// @Summary Post users
+// @Description Create a user
+// @Tags users
+// @Param body body models.UserRegister true "User register"
+// @Success 200 {object} map[string]interface{}
+// @Router /auth/register [post]
 func Register(c *gin.Context) {
-	var req models.User
+	var req models.UserRegister
 
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input"})
@@ -68,8 +74,14 @@ func Register(c *gin.Context) {
 	c.JSON(http.StatusCreated, gin.H{"message": "User created"})
 }
 
+// @Summary Auth user
+// @Description Login
+// @Tags users
+// @Success 200 {object} map[string]interface{}
+// @Param body body models.UserAuth true "User auth"
+// @Router /auth/login [post]
 func Auth(c *gin.Context) {
-	var req models.User
+	var req models.UserAuth
 
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input"})
@@ -79,7 +91,7 @@ func Auth(c *gin.Context) {
 	var user models.User
 
 	if err := db.DB.Where("username = ? OR email = ?", req.Username, req.Username).First(&user).Error; err != nil {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid username/email or password"})
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid username/email or password", "info": err})
 		return
 	}
 

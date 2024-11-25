@@ -6,3 +6,14 @@ type User struct {
 	Email    string `gorm:"size:255;unique" json:"email"`
 	Password string `gorm:"size:255" json:"password"`
 }
+
+type UserRegister struct {
+	Username string `gorm:"size:255;unique" json:"username"`
+	Email    string `gorm:"size:255;unique" json:"email"`
+	Password string `gorm:"size:255" json:"password"`
+}
+
+type UserAuth struct {
+	Username string `gorm:"size:255;unique" json:"username"`
+	Password string `gorm:"size:255" json:"password"`
+}

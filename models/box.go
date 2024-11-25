@@ -1,7 +1,12 @@
 package models
 
 type Box struct {
-	ID    uint   `gorm:"primaryKey"`
-	Name  string `gorm:"size:255"`
-	Price uint
+	ID    string `gorm:"primaryKey;type:uuid;default:uuid_generate_v4()" json:"id"`
+	Name  string `gorm:"size:255" json:"name"`
+	Price uint   `json:"price"`
+}
+
+type NewBox struct {
+	Name  string `gorm:"size:255" json:"name"`
+	Price uint   `json:"price"`
 }

@@ -11,6 +11,12 @@ import (
 	"gorm.io/gorm"
 )
 
+// @Summary Get boxes
+// @Description Returns a list of boxes
+// @Security BearerAuth
+// @Tags boxes
+// @Success 200 {object} map[string]interface{}
+// @Router /api/boxes [get]
 func GetBoxes(c *gin.Context) {
 	var items []models.Box
 	if err := db.DB.Find(&items).Error; err != nil {
@@ -21,6 +27,13 @@ func GetBoxes(c *gin.Context) {
 	c.JSON(http.StatusOK, items)
 }
 
+// @Summary Post boxes
+// @Description Create a box
+// @Security BearerAuth
+// @Tags boxes
+// @Success 200 {object} map[string]interface{}
+// @Param body body models.NewBox true "Create box"
+// @Router /api/boxes [post]
 func CreateBox(c *gin.Context) {
 	var box models.Box
 
@@ -39,6 +52,13 @@ func CreateBox(c *gin.Context) {
 	c.JSON(http.StatusOK, box)
 }
 
+// @Summary Put boxes
+// @Description Edit the box
+// @Security BearerAuth
+// @Tags boxes
+// @Success 200 {object} map[string]interface{}
+// @Param body body models.Box true "Edit box"
+// @Router /api/boxes [put]
 func EditBox(c *gin.Context) {
 	var box models.Box
 	var boxToEdit models.Box
@@ -78,6 +98,13 @@ func EditBox(c *gin.Context) {
 	c.JSON(http.StatusOK, boxToEdit)
 }
 
+// @Summary Delete boxes
+// @Security BearerAuth
+// @Description Delete the box
+// @Param id path string true "Box ID" format(uuid)
+// @Tags boxes
+// @Success 200 {object} map[string]interface{}
+// @Router /api/boxes/{id} [delete]
 func DeleteBox(c *gin.Context) {
 	id, ok := c.Params.Get("id")
 	if !ok {

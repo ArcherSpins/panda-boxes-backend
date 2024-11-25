@@ -5,9 +5,19 @@ import (
 	"panda-boxes/configs"
 	"panda-boxes/db"
 	"panda-boxes/internal/handlers"
+	"panda-boxes/middleware"
+
+	swaggerFiles "github.com/swaggo/files"
+
+	_ "panda-boxes/docs"
 
 	"github.com/gin-gonic/gin"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
+
+// @securityDefinitions.apikey BearerAuth
+// @in header
+// @name Authorization
 
 func main() {
 	log.Printf("Starting...")
@@ -17,14 +27,20 @@ func main() {
 
 	r := gin.Default()
 
-	r.POST("/auth", handlers.Auth)
-	r.POST("/register", handlers.Register)
-	r.POST("/forgot-password", handlers.ForgotPassword)
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
-	r.GET("/boxes", handlers.GetBoxes)
-	r.DELETE("/boxes/:id", handlers.DeleteBox)
-	r.POST("/boxes", handlers.CreateBox)
-	r.PUT("/boxes/edit", handlers.EditBox)
+	r.POST("/auth/login", handlers.Auth)
+	r.POST("/auth/register", handlers.Register)
+	r.POST("/auth/password/forgot", handlers.ForgotPassword)
+
+	private := r.Group("/api")
+	private.Use(middleware.AuthRequired())
+
+	private.GET("/boxes", handlers.GetBoxes)
+	// r.GET("/boxes/:id", handlers.GetBoxByID)           // Получить коробку по ID
+	private.POST("/boxes", handlers.CreateBox)
+	private.PUT("/boxes", handlers.EditBox)
+	private.DELETE("/boxes/:id", handlers.DeleteBox)
 
 	port := config.AppPort
 
